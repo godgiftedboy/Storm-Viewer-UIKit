@@ -12,6 +12,9 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Storm Viewer"
+        
         // Do any additional setup after loading the view.
         let fm = FileManager.default;
         let path = Bundle.main.resourcePath!
