@@ -14,11 +14,15 @@ class DetailViewController: UIViewController {
     
     var selectedImage: String?
     
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = selectedImage;
         navigationItem.largeTitleDisplayMode = .never;
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped));
 
         if let imageToLoad = selectedImage {
             imageView.image = UIImage(named: imageToLoad);
@@ -34,6 +38,15 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(animated);
         navigationController?.hidesBarsOnTap = false;
         
+    }
+   
+    //UIBarButtonItem is beyond the UIKit. So, It is written in objective c rather than Swift.
+    //so @objc is required in this function as it is being accessed by UIBarButtonItem.
+    //so that it can recognize the function.
+    @objc func shareTapped (){
+        let vc = UIActivityViewController(activityItems: [], applicationActivities: []);
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem;
+        present(vc, animated: true);
     }
     
 
