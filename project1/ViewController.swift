@@ -17,6 +17,11 @@ class ViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true;
         
         // Do any additional setup after loading the view.
+        performSelector(inBackground: #selector(loadPicturesFromBundle), with: nil)
+        
+    }
+    
+    @objc func loadPicturesFromBundle(){
         let fm = FileManager.default;
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path);
@@ -26,6 +31,10 @@ class ViewController: UITableViewController {
                 pictures.append(item);
             }
         }
+        //DispatchQueue.main.async() {
+        //         self.tableView.reloadData()
+        //}
+        tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false);
         
         print(pictures);
     }
